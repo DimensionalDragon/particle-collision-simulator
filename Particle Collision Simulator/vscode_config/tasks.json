@@ -1,0 +1,92 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+			"label": "Compile SDL2 Debug",
+			"command": "C:\\mingw64\\bin\\g++.exe",
+			"args": [
+                "-I${workspaceFolder}\\include",
+                "-I${workspaceFolder}\\include\\SDL2-windows-x64\\include",
+				"-c",
+				"${workspaceFolder}\\src\\*.cpp",
+                "-std=c++17",
+                "-g",
+                "-Wall",
+                "-m64"
+			]
+        },
+        {
+            "type": "shell",
+            "label": "Build SDL2 Debug",
+            "command": "C:\\mingw64\\bin\\g++.exe",
+            "args": [
+                "*.o",
+                "-o",
+                "${workspaceFolder}\\bin\\debug\\main.exe",
+                "-L",
+                "D:\\SDL2-windows-x64\\lib",
+                "-lmingw32",
+                "-lSDL2main",
+                "-lSDL2",
+                "-lSDL2_image"
+            ],
+            "dependsOn": "Compile SDL2 Debug"
+        },
+        {
+            "type": "shell",
+            "label": "Run SDL2 Debug",
+            "command": ".\\bin\\debug\\main.exe",
+            "dependsOn": "Build SDL2 Debug",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+			"label": "Compile SDL2 Release",
+			"command": "C:\\mingw64\\bin\\g++.exe",
+			"args": [
+                "-I${workspaceFolder}\\include",
+                "-I${workspaceFolder}\\include\\SDL2-windows-x64\\include",
+				"-c",
+				"${workspaceFolder}\\src\\*.cpp",
+                "-std=c++17",
+                "-O3",
+                "-Wall",
+                "-m64"
+			]
+        },
+        {
+            "type": "shell",
+            "label": "Build SDL2 Release",
+            "command": "C:\\mingw64\\bin\\g++.exe",
+            "args": [
+                "*.o",
+                "-o",
+                "${workspaceFolder}\\bin\\release\\main.exe",
+                "-s",
+                "-L",
+                "D:\\SDL2-windows-x64\\lib",
+                "-lmingw32",
+                "-lSDL2main",
+                "-lSDL2",
+                "-lSDL2_image"
+            ],
+            "dependsOn": "Compile SDL2 Release"
+        },
+        {
+            "type": "shell",
+            "label": "Run SDL2 Release",
+            "command": ".\\bin\\release\\main.exe",
+            "dependsOn": "Build SDL2 Release",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
